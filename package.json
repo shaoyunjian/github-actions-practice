@@ -1,0 +1,27 @@
+{
+  "name": "github-actions-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "nodemon": "devStart",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "devStart": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1335.0",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.1",
+    "nodemon": "^2.0.21",
+    "socket.io": "^4.6.1"
+  }
+}

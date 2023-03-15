@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.1.0/tocas.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link rel="stylesheet" type="text/css" href="/chatroom.css">
+  <link rel="stylesheet" type="text/css" href="/audiochat.css">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <title>Chatroom</title>
+</head>
+
+<body>
+  <header>
+    <a href="/chatroom">
+      <div class="top-bar-left">Sparkles Chat✧</div>
+    </a>
+    <div class="sign-out-btn" id="nav-signout-btn">Sign Out</div>
+  </header>
+
+  <main>
+    <div class="ts-app-layout is-horizontal is-full chat-list">
+      <!-- Left Part  -->
+      <div class="cell is-vertical" style="width: 350px;">
+
+        <div class="cell">
+          <div class="ts-content">
+            <div class="ts-row is-middle-aligned">
+              <div class="column avatar">
+                <div class="ts-avatar is-circular is-large is-bordered">
+                  <img src="https://v4.tocas-ui.com/zh-tw/assets/images/user.png" id="home-my-avatar-url" />
+                </div>
+                <div class="avatar-badge"></div>
+              </div>
+              <div class="column is-fluid">
+                <div class="ts-text is-heavy is-large" id="home-my-name">
+                </div>
+                <div class="ts-text is-tiny" style="color: var(--ts-gray-500)">Good day!</div>
+              </div>
+              <div class="column">
+                <div class="ts-wrap is-compact">
+                  <button class="ts-button is-circular is-small is-icon is-secondary" id="member-settings-btn">
+                    <span class="ts-icon is-ellipsis-icon"></span>
+                  </button>
+                  <div class="notification-btns" id="user-search-btn">
+                    <button class="ts-button is-circular is-small is-icon is-secondary">
+                      <span class="ts-icon is-user-plus-icon"></span>
+                    </button>
+                    <div class="notification-badge display-none"></div>
+                  </div>
+                  <div class="notification-btns" id="notification-btn">
+                    <button class="ts-button is-circular is-small is-icon is-secondary" id="notification-btn">
+                      <span class="ts-icon is-bell-icon"></span>
+                    </button>
+                    <div class="notification-badge display-none"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- chat list scrollbar -->
+        <div class="cell is-fluid is-scrollable" style="border: 0px;">
+          <!-- chat list -->
+          <div class="scrollbar cell" id="chat-list-scrollbar">
+
+            <!-- default -->
+            <div class="ts-content is-dense" id="chat-list-default">
+              <div class="ts-space"></div>
+              <div style="text-align: center; font-size: 20px;font-weight: 400; color: var(--ts-gray-500);">
+                Use <span class="ts-icon is-user-plus-icon"></span> to find friends. ⤴
+              </div>
+              <div class="ts-space"></div>
+              <img src="/chatlist-default.png" style="width:300px; border-radius: 5px;opacity: 50%;">
+            </div>
+
+          </div>
+        </div>
+
+        <div class="cell left-bottom-border" style="border: 0px; text-align: center;">
+          <div class="ts-content ts-text is-tiny">
+            Copyright © 2023 Shaoyun Jian
+            <a href="https://github.com/shaoyunjian/sparkles-chat" target="_blank">
+              <span class="ts-icon is-github-icon"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- right box -->
+      <!-- right box: default -->
+      <div class="cell is-fluid is-vertical right-box" id="welcome-box">
+
+        <div class="greeting">
+          <div class="greeting-one">Welcome,
+            <span id="greeting-my-name"></span> !
+          </div>
+          <div class="greeting-two">Start chatting on Sparkles Chat !</div>
+        </div>
+        <img src="/home-chatroom-default.png" style="width: 80%; margin: auto; opacity: 55%;">
+      </div>
+
+      <!-- right box: chatroom -->
+      <div class="cell is-fluid is-vertical right-box display-none" id="chatbox">
+
+        <!-- room  -->
+        <div class="cell top-bar">
+          <div class="ts-content">
+            <div class="ts-row is-middle-aligned">
+              <div class="column avatar">
+                <div class="ts-avatar is-circular is-large is-bordered" id="chatbox-top-bar-avatar">
+                  <img src="https://v4.tocas-ui.com/zh-tw/assets/images/user.png" />
+                </div>
+                <div class="chatbox-avatar-badge avatar-badge"></div>
+              </div>
+              <div class="column is-fluid">
+                <div class="ts-text is-big" id="chatbox-top-bar-name"></div>
+              </div>
+              <!-- <div class="column" style="width:40%;">
+                <div class="ts-input is-solid is-fluid is-icon" id="message-search-input-field">
+                  <span class="ts-icon is-magnifying-glass-icon"></span>
+                  <input type="text" placeholder="Search messages in current conversation..."
+                    id="message-search-input" />
+                  <button class="ts-icon is-xmark-icon is-small " id="message-search-close-btn"></button>
+                </div>
+              </div> -->
+              <div class="column">
+                <button class="ts-button is-circular is-icon is-ghost" id="audio-call-btn">
+                  <span class="ts-icon is-phone-icon"></span>
+                </button>
+                <button class="ts-button is-circular is-icon is-ghost" id="message-search-btn">
+                  <span class="ts-icon  is-magnifying-glass-icon"></span>
+                </button>
+                <!-- <button class="ts-button is-circular is-icon is-ghost">
+                <span class="ts-icon is-ellipsis-icon"></span>
+              </button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="middle-scollbar cell is-fluid is-scrollable">
+          <div class="ts-content" style="padding: 15px 20px 10px 30px;">
+
+            <!-- chat -->
+            <div class="chat-message-box">
+            </div>
+
+          </div>
+        </div>
+        <div id="image-preload-area">
+          <div id="image-preload-box">
+            <img id="image-preload-image" />
+            <button class="ts-close" id="input-file-reset-btn"></button>
+          </div>
+        </div>
+
+        <div class="typing cell display-none">
+          <div class="typing-loading">
+            <div class="typing-description"></div>
+            <div class="loading-data three-bounce">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cell button-bar">
+          <div class="ts-dropdown is-top-left is-scrollable emoji-selector">
+            <button class="item">
+              <div class="emoji">😀</div>
+              <div class="emoji">😃</div>
+              <div class="emoji">😄</div>
+              <div class="emoji">😁</div>
+              <div class="emoji">😆</div>
+              <div class="emoji">😅</div>
+              <div class="emoji">🤣</div>
+            </button>
+            <button class="item">
+              <div class="emoji">😂</div>
+              <div class="emoji">🙂</div>
+              <div class="emoji">🙃</div>
+              <div class="emoji">😉</div>
+              <div class="emoji">😊</div>
+              <div class="emoji">😇</div>
+              <div class="emoji">🥰</div>
+            </button>
+            <button class="item">
+              <div class="emoji">😍</div>
+              <div class="emoji">🤩</div>
+              <div class="emoji">😘</div>
+              <div class="emoji">😋</div>
+              <div class="emoji">🤪</div>
+              <div class="emoji">🤗</div>
+              <div class="emoji">🤭</div>
+            </button>
+            <button class="item">
+              <div class="emoji">🤔</div>
+              <div class="emoji">🤫</div>
+              <div class="emoji">🤨</div>
+              <div class="emoji">😐</div>
+              <div class="emoji">😑</div>
+              <div class="emoji">😶</div>
+              <div class="emoji">🙄</div>
+            </button>
+            <button class="item">
+              <div class="emoji">😬</div>
+              <div class="emoji">🤥</div>
+              <div class="emoji">😌</div>
+              <div class="emoji">😔</div>
+              <div class="emoji">🤤</div>
+              <div class="emoji">😪</div>
+              <div class="emoji">😴</div>
+            </button>
+            <button class="item">
+              <div class="emoji">🤢</div>
+              <div class="emoji">🤒</div>
+              <div class="emoji">🥴</div>
+              <div class="emoji">🥳</div>
+              <div class="emoji">😮</div>
+              <div class="emoji">😯</div>
+              <div class="emoji">😲</div>
+            </button>
+            <button class="item">
+              <div class="emoji">😳</div>
+              <div class="emoji">🥺</div>
+              <div class="emoji">😦</div>
+              <div class="emoji">😧</div>
+              <div class="emoji">😨</div>
+              <div class="emoji">😰</div>
+              <div class="emoji">😥</div>
+            </button>
+            <button class="item">
+              <div class="emoji">😢</div>
+              <div class="emoji">😭</div>
+              <div class="emoji">😱</div>
+              <div class="emoji">😖</div>
+              <div class="emoji">😣</div>
+              <div class="emoji">😞</div>
+              <div class="emoji">😓</div>
+            </button>
+            <button class="item">
+              <div class="emoji">😠</div>
+              <div class="emoji">😡</div>
+              <div class="emoji">🤬</div>
+              <div class="emoji">😈</div>
+              <div class="emoji">👿</div>
+              <div class="emoji">🤡</div>
+              <div class="emoji">👺</div>
+            </button>
+            <button class="item">
+              <div class="emoji">💖</div>
+              <div class="emoji">💝</div>
+              <div class="emoji">❤️</div>
+              <div class="emoji">🧡</div>
+              <div class="emoji">💛</div>
+              <div class="emoji">💙</div>
+              <div class="emoji">💜</div>
+            </button>
+            <button class="item">
+              <div class="emoji">🤍</div>
+              <div class="emoji">🖤</div>
+              <div class="emoji">💢</div>
+              <div class="emoji">💥</div>
+              <div class="emoji">💦</div>
+              <div class="emoji"></div>
+              <div class="emoji"></div>
+            </button>
+          </div>
+          <div class="ts-content is-dense">
+            <div class="ts-row is-compact is-middle-aligned">
+              <div class="column">
+                <button class="ts-button is-circular is-icon is-ghost" id="emoji-selector-btn">
+                  <span class="ts-icon is-face-smile-icon" id="emoji-icon"></span>
+                </button>
+                <button class="ts-button is-circular is-icon is-ghost">
+                  <label for="input-file" style="width: 40.7px; cursor: pointer;">
+                    <span class="ts-icon is-image-icon" style="cursor: pointer;">
+                      <input type="file" id="input-file" accept=".jpg, .jpeg, .png"
+                        style="display:none; visibility: none; cursor: pointer;">
+                    </span>
+                  </label>
+                </button>
+              </div>
+              <div class="column is-fluid">
+                <div class="ts-input is-solid is-fluid">
+                  <input type="text" placeholder="Send a message..." id="input-message" maxlength="1000"
+                    autocomplete="off" />
+                </div>
+              </div>
+              <div class="column">
+                <button class="ts-button is-circular is-icon is-ghost" id="send-message-btn">
+                  <span class="ts-icon is-paper-plane-icon"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- additional box on the right side -->
+      <div class="cell is-vertical" style="width:350px; display:none;" id="message-search-box">
+
+        <div class="cell ts-content" style="border: 0px">
+          <div class="ts-row">
+            <div class="column is-fluid">
+              <div class="ts-header is-heavy">Message Search</div>
+            </div>
+            <div class="column">
+              <button class="ts-close" id="message-search-close-btn"></button>
+            </div>
+          </div>
+          <div class="ts-space"></div>
+          <div class="column">
+            <div class="ts-input is-solid is-fluid is-start-icon" id="message-search-input-field">
+              <span class="ts-icon is-magnifying-glass-icon"></span>
+              <input type="text" placeholder="Search for messages..." id="message-search-input" maxlength="1000"
+                autocomplete="off" />
+              <div class="ts-dropdown is-bottom" id="message-search-dropdown">
+                <div class="item" style="display:flex;">
+                  <div>Search:</div>
+                  <div id="message-search-copy" class="search-copy"></div>
+                  <div style="margin-left: auto;">
+                    <img src="/enter-key.jpg" width="50px" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- default -->
+        <div class="ts-content is-dense is-center-aligned" id="message-history-default-box">
+          <br><br>
+          <div>
+            <img src="/text-history-default.png" style="width:300px; opacity: 60%;margin: 0 auto;">
+          </div>
+          <div style="text-align: center; font-size: 18px;font-weight: 400; color: gray;">
+            Use <span class="ts-icon is-magnifying-glass-icon"></span> Search to find messages!</span>
+          </div>
+        </div>
+
+        <div id="message-history-display-box" class="cell ts-content is-dense is-fluid is-scrollable">
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- contact modal -->
+  <div class="ts-modal" id="user-search-modal">
+    <div class="content" id="user-search-modal-content">
+      <div class="ts-content">
+        <div class="ts-row">
+          <div class="column is-fluid">
+            <div class="ts-header is-heavy">User Search</div>
+          </div>
+          <div class="column">
+            <button class="ts-close" id="user-search-modal-close-btn"></button>
+          </div>
+        </div>
+        <!-- </div> -->
+        <div class="ts-space"></div>
+        <!-- <div class="ts-divider"></div> -->
+        <!-- <div class="ts-content"> -->
+        <div class="ts-input is-solid is-fluid is-start-icon">
+          <span class="ts-icon is-magnifying-glass-icon"></span>
+          <input type="text" placeholder="Enter a name or email..." id="user-search-bar" autocomplete="off" />
+          <div class="ts-dropdown is-bottom" id="user-search-dropdown">
+            <div class="item" style="display:flex;">
+              <div>Search:</div>
+              <div id="user-search-copy" class="search-copy"></div>
+              <div style="margin-left: auto;">
+                <img src="/enter-key.jpg" width="50px" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ts-divider"></div>
+      <div style="height: 250px; overflow-y: auto;">
+        <div class="user-list ts-content is-dense is-center-aligned">
+          <img src="/people-search.png" style="height: 220px; opacity: 40%;">
+          <!-- user search result -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- member center modal -->
+  <div class="ts-modal" id="member-settings-modal">
+    <div class="content">
+      <div class="ts-content">
+        <div class="ts-row">
+          <div class="column is-fluid">
+            <div class="ts-header is-heavy">Settings</div>
+          </div>
+          <div class="column">
+            <button class="ts-close" id="member-settings-modal-close-btn"></button>
+          </div>
+        </div>
+      </div>
+      <div class="ts-divider"></div>
+      <div class="ts-space"></div>
+      <div class="">
+        <div style="padding: 0 115px; position: relative;">
+          <div class="ts-image is-small is-1-by-1 is-covered is-circular is-centered is-bordered">
+            <img src="https://d1gnt5bnf8w529.cloudfront.net/user2.png" id="settings-my-avatar" />
+          </div>
+          <label for="settings-input-file" style="width: 40.7px; cursor: pointer; position: absolute;">
+            <div class="avatar-edited-btn ts-icon is-user-pen-icon is-huge">
+            </div>
+            <input id="settings-input-file" type="file" accept=".jpg, .jpeg, .png"
+              style="display:none; visibility: none; cursor: pointer;">
+          </label>
+        </div>
+        <div class="ts-space"></div>
+        <div class="profile" style="padding:0 60px">
+          <div class="ts-input is-start-icon is-disabled" style="margin:5px 0; cursor: no-drop;">
+            <span class="ts-icon is-envelope-icon"></span>
+            <input type="text" placeholder="email address" value="" id="settings-my-email">
+          </div>
+          <div class="ts-input is-start-icon" style="margin:5px 0">
+            <span class="ts-icon is-user-icon"></span>
+            <input type="text" placeholder="Edit username" value="" id="settings-my-name" maxlength="10"
+              autocomplete="off">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ts-content" style="padding: 10px 80px 30px 80px">
+        <button class="ts-button is-circular is-outlined is-fluid" id="save-btn">
+          <span class="ts-text is-heavy" id="save-btn">Save</span>
+        </button>
+        <div class="ts-space"></div>
+        <button class="ts-button is-circular is-negative is-outlined is-fluid" id="sign-out-btn">
+          <span class="ts-text is-heavy">Sign out</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- notification modal -->
+  <div class="ts-modal" id="notification-modal">
+    <div class="content">
+      <div class="ts-content">
+        <div class="ts-row">
+          <div class="column is-fluid">
+            <div class="ts-header is-heavy">Notification</div>
+          </div>
+          <div class="column">
+            <button class="ts-close" id="notification-modal-close-btn"></button>
+          </div>
+        </div>
+      </div>
+      <div class="ts-divider"></div>
+
+      <div style="height: 250px; overflow-y: auto;">
+        <div class="user-list ts-content is-dense is-center-aligned" id="notification-list">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- incoming call popup -->
+  <div class=" incoming-call-popup display-none">
+    <audio loop id="ringtone">
+      <source src="https://d1gnt5bnf8w529.cloudfront.net/ringtone.wav" type="audio/wav">
+    </audio>
+    <div class="caller-avatar">
+      <img src="https://d1gnt5bnf8w529.cloudfront.net/Shiromaro.png" id="caller-avatar-url">
+    </div>
+    <div class="caller-name"></div>
+    <div class="incoming-call-description">Incoming call...</div>
+    <div class="incoming-call-icons">
+      <i class="fas fa-phone" id="accept-call-btn"></i>
+      <i class="fas fa-phone" id="decline-call-btn"></i>
+    </div>
+  </div>
+
+  <!-- audio connecting popup -->
+  <div class="audio-connecting-popup display-none">
+    <div class="audio-connecting-avatar">
+      <img src="https://d1gnt5bnf8w529.cloudfront.net/Shiromaro.png" id="audio-connecting-avatar-url">
+      <i class="fas fa-microphone-slash display-none"></i>
+    </div>
+    <div class="connecting-name"></div>
+    <div class="connecting-description">Audio connecting...</div>
+    <div class="connecting-time"></div>
+    <div class="incoming-call-icons">
+      <i class="fas fa-microphone mute-unmute-toggle-btn" id="unmute-btn"></i>
+      <i class="fas fa-microphone-slash mute-unmute-toggle-btn display-none" id="mute-btn"></i>
+      <i class="fas fa-phone" id="end-call-btn"></i>
+    </div>
+  </div>
+
+  <!-- image display in chatroom-->
+  <div class="ts-modal is-big" id="chat-image-display-area" style="cursor:pointer">
+    <img style="max-height: 500px;">
+  </div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.1.0/tocas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+  <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="/common.js"></script>
+  <script type="text/javascript" src="/layout.js"></script>
+  <script type="text/javascript" src="/chatroom.js"></script>
+  <script type="text/javascript" src="/audiochat.js"></script>
+  <script type="text/javascript" src="/friend.js"></script>
+  <script type="text/javascript" src="/member-settings.js"></script>
+  <script type="text/javascript" src="/notification.js"></script>
+  <script type="text/javascript" src="/message.js"></script>
+</body>
+
+</html>
