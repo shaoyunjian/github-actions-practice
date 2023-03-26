@@ -1,27 +1,37 @@
 {
-  "name": "github-actions-practice",
+  "name": "sparklezz",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "nodemon": "devStart",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test --exit",
     "start": "node server.js",
     "devStart": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.1335.0",
+    "aws-sdk": "^2.1319.0",
+    "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
+    "chai": "^4.3.7",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
-    "ejs": "^3.1.9",
+    "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.1",
-    "nodemon": "^2.0.21",
-    "socket.io": "^4.6.1"
+    "moment": "^2.29.4",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.8.4",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.20",
+    "socket.io": "^4.5.4",
+    "socketio-jwt": "^4.6.2",
+    "supertest": "^6.3.3"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "should": "^13.2.3"
   }
 }
