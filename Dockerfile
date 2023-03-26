@@ -13,4 +13,4 @@ RUN npm install
 # Inform Docker that the container listens on port 8080
 EXPOSE 8080
 
-CMD [ "node", "server.js" ]
+CMD ["node", "-r", "dotenv/config", "server.js"]
