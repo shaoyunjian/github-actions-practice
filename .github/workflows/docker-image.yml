@@ -13,14 +13,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Build and push Docker image to DockerHub
-        uses: docker/build-push-action@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+    
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          context: .
-          push: true
-          tags: ${{ secrets.IMAGE_NAME }}:latest
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: "{{defaultContext}}:src"
+          push: true
 
       - name: Docker Pull & Run From Hub
         uses: appleboy/ssh-action@master
