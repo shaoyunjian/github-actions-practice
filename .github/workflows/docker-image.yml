@@ -39,7 +39,7 @@ jobs:
           username: ${{ secrets.AWS_INSTANCE_USERNAME }}
           key: ${{ secrets.AWS_SSH_KEY }}
           script: |
-            docker stop sparkles-container || true
-            docker rm sparkles-container || true
-            docker pull ${{ secrets.IMAGE_NAME }}:latest
-            docker run -d --name sparkles-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}:latest
+            sudo docker stop sparkles-container || true
+            sudo docker rm sparkles-container || true
+            sudo docker pull ${{ secrets.IMAGE_NAME }}:latest
+            sudo docker run -d --name sparkles-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}:latest
