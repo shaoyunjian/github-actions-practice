@@ -42,4 +42,4 @@ jobs:
             sudo docker stop sparkles-container || true
             sudo docker rm sparkles-container || true
             sudo docker pull ${{ secrets.IMAGE_NAME }}:latest
-            sudo docker run -d --name sparkles-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}:latest
+            sudo docker run -d --name sparkles-container -p 8080:8080 --env-file ./.env ${{ secrets.IMAGE_NAME }}:latest
